@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
@@ -41,10 +42,17 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: const Text(
-          'Trending',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          'WallPix',
+          style: TextStyle(fontWeight: FontWeight.w800, letterSpacing: 1.2),
+        ),
+        flexibleSpace: ClipRect(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: Container(color: Colors.black.withValues(alpha: .2)),
+          ),
         ),
       ),
       body: Consumer<WallpaperProvider>(

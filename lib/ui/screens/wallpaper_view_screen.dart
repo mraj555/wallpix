@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:async_wallpaper/async_wallpaper.dart';
@@ -157,30 +158,34 @@ class _WallpaperViewScreenState extends State<WallpaperViewScreen> {
             ),
         ],
       ),
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.bottomCenter,
-            end: Alignment.topCenter,
-            colors: [Colors.black.withValues(alpha: .8), Colors.transparent],
+      bottomNavigationBar: ClipRRect(
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+            decoration: BoxDecoration(
+              color: Colors.black.withValues(alpha: .4),
+              border: Border(
+                top: BorderSide(color: Colors.white.withValues(alpha: .1), width: 1),
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _buildActionButton(
+                  icon: Icons.download,
+                  label: 'Download',
+                  onTap: _isProcessing ? null : _downloadImage,
+                ),
+                _buildActionButton(
+                  icon: Icons.image,
+                  label: 'Set Wallpaper',
+                  onTap: _isProcessing ? null : _setWallpaperDialog,
+                  isPrimary: true,
+                ),
+              ],
+            ),
           ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            _buildActionButton(
-              icon: Icons.download,
-              label: 'Download',
-              onTap: _isProcessing ? null : _downloadImage,
-            ),
-            _buildActionButton(
-              icon: Icons.image,
-              label: 'Set Wallpaper',
-              onTap: _isProcessing ? null : _setWallpaperDialog,
-              isPrimary: true,
-            ),
-          ],
         ),
       ),
     );
